@@ -105,7 +105,7 @@ namespace ConcurrencyCheckerLibrary
       }
       catch (OperationCanceledException)
       {
-        throw new ConcurrencyException("Possible deadlock detected. Make sure that you do not use .Wait() or .Result on async methods.");
+        throw new ConcurrencyException("Possible deadlock detected. Make sure that you do not use .Wait(), .WaitAny(), .WaitAll(), .GetAwaiter().GetResult() or .Result on async methods.");
       }
     }
 
@@ -391,6 +391,11 @@ namespace ConcurrencyCheckerLibrary
       }
 
       return memberTracker;
+    }
+
+    public static void AssertAsyncDeadlocksOnly(object v)
+    {
+      throw new NotImplementedException();
     }
   }
 }

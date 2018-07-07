@@ -17,7 +17,7 @@ Available on NuGet: https://www.nuget.org/packages/ConcurrencyChecker
     - race conditions
     - deadlocks
 
-## Which classes to ckeck
+## Which classes to check
   Run the ConcurrencyChecker as an additional test on any class which should handle multiple concurrent threads accessing the SAME instance. 
   
   These cases are and also not limited to:
@@ -25,6 +25,13 @@ Available on NuGet: https://www.nuget.org/packages/ConcurrencyChecker
   - Shared classes when using dependency injection frameworks
   - Classes with static methods, properties or fields
   - Instances reused accross threads/requests
+  - Third party libraries
+  
+
+  Use the async deadlock checking to make sure:
+  - Your async library will not deadlock if called synchronously for resiliency
+  - Test 3rd party libraries for deadlocks
+  - Troubleshooting async deadlocks
 
 ## How to
   * Create an instance of the class you want to check for possible concurrency issues:
@@ -123,8 +130,10 @@ Available on NuGet: https://www.nuget.org/packages/ConcurrencyChecker
 
     Use the exact report member description i.e. Foo->Bar and add it to ignore list when calling the ConcurrencyChecker constructor. 
 
-## Tutorial
-  This tutorial is a basic code example to explain the usage of the framework.
+## Tutorials
+
+### Checking for concurrency and async deadlock issues
+  This tutorial is a basic code example to explain the usage of the framework for checking for concurrency and async deadlock issues.
 
   1. Create a class which will have a potential concurrency problem when running in a multi threaded environment:
 
@@ -154,6 +163,7 @@ Available on NuGet: https://www.nuget.org/packages/ConcurrencyChecker
 	  ```
 
   3. Now use the ConcurrencyChecker to see if the class has any concurrency issues when running in a multi threaded environment (spoiler, it will!):
+  
 	  ```
 	  var instance = new ClassWithFieldConcurrencyIssue();
 	
@@ -164,11 +174,72 @@ Available on NuGet: https://www.nuget.org/packages/ConcurrencyChecker
 		  () => instance.ChangeNameTo("Peter"));
 	  ```
 	
-    What did we do here? We kicked off 10 concurrent threads of which 5 will be running the action instance.ChangeNameTo("Jane") and the other 5 will be running the action instance.ChangeNameTo("Peter"). 
+	  What did we do here? We kicked off 10 concurrent threads of which 5 will be running the action instance.ChangeNameTo("Jane") and the other 5 will be running the action instance.ChangeNameTo("Peter"). 
+
+### Checking only for async deadlock issues
+  This tutorial is a basic code example to explain the usage of the framework for checking async deadlock issues only. This is handy to check only async code for any possible deadlocks.
+
+  It is especially useful when you are using asynchronous libraries in a legacy application that hasn't fully implemented async/await all the way up.
+
+  1. Create a class which will have a potential async deadlock problem when running in a single threaded synchronization context:
+
+	  ```
+	  public class ClassWithAsyncDeadlockIssue
+	  {
+		  public void Foo()
+		  {
+		    _methodThatWillDeadlock().Wait();
+		  }
+
+      private async Task _methodThatWillDeadlock()
+      {
+        await Task.Delay(20);
+      }
+	  }
+	  ```
+  2. You can use the unit testing framework of your choice. In this example NUNIT is used:
+
+	  ```
+	  [TestFixture]
+	  public class AsyncDeadlockOnlyTests 
+	  {
+		  [Test]
+      public void Run_Given_ClassWithAsyncDeadlockIssue_Should_Deadlock()
+      {
+        var instance = new ClassWithAsyncDeadlockIssue();
+        Assert.Throws<ConcurrencyException>(() => ConcurrencyChecker.AssertAsyncDeadlocksOnly(() => instance.Foo()));
+      }
+	  }
+	  ```
+	
+	  What did we do here? Under the hood a single threaded synchronization context is created which the code gets executed on. This simulates the synchronization contexts of ASP.NET (not ASP.NET CORE), WPF and Windows Forms.
+
+    The explanation of why the deadlock happens is beyond the scope of this readme, but please go read more on this excellent blog post by Stephen Cleary: https://blog.stephencleary.com/2012/07/dont-block-on-async-code.html
+
+  3. Fix the code by using adding .ConfigureAwait(false) to the Task.Delay(20)
+
+    ```
+	  public class ClassWithAsyncDeadlockIssue
+	  {
+		  public void Foo()
+		  {
+		    _methodThatWillDeadlock().Wait();
+		  }
+
+      private async Task _methodThatWillDeadlock()
+      {
+        await Task.Delay(20).ConfigureAwait(false);
+      }
+	  }
+	  ```
+    
+    What is this magic? All we did here was configuring the task not to use the current synchonization context when resuming execution.
+
 
 ## Troubleshooting
 
-  * The test freezes and when I debug it throws a stack overflow exception
+  * The test freezes and when I debug it throws a stack overflow exception: 
+  
     Decrease the depth parameter.
 
 ## About the ConcurrencyChecker

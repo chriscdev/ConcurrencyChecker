@@ -24,7 +24,7 @@ namespace ConcurrencyCheckerLibraryTests
 
       var error = Assert.Throws<ConcurrencyException>(() => ConcurrencyChecker.AssertAsyncDeadlocksOnly(() => instance.ShouldDeadlock(), 200));
 
-      Assert.AreEqual("Possible deadlock detected. Make sure that you do not use .Wait() or .Result on async methods.", error.Message);
+      Assert.AreEqual("Possible deadlock detected. Make sure that you do not use .Wait(), .WaitAny(), .WaitAll(), .GetAwaiter().GetResult() or .Result on async methods.", error.Message);
     }
 
     [Test]

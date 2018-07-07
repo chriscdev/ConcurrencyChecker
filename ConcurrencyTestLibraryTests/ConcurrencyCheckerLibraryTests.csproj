@@ -91,6 +91,7 @@
     <Compile Include="Helpers\ClassWithFieldConcurrencyIssue.cs" />
     <Compile Include="Helpers\ClassWithTypeChangeConcurrencyIssue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReadmeTutorialTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

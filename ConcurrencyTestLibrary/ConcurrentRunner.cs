@@ -63,7 +63,6 @@ namespace ConcurrencyCheckerLibrary
         var indexOfAction = i % funcs.Length;
 
         var task = Task.Run(() => AsyncContext.Run(funcs[indexOfAction]), ct).ContinueWith(t => tests[indexOfAction](t.Result), ct);
-        //var task = funcs[indexOfAction].Invoke().ContinueWith(t => tests[indexOfAction](t.Result), ct);
 
         parallelTaskList.Add(task);
       }
