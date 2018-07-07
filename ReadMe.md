@@ -191,10 +191,10 @@ Available on NuGet: https://www.nuget.org/packages/ConcurrencyChecker
 		    _methodThatWillDeadlock().Wait();
 		  }
 
-      private async Task _methodThatWillDeadlock()
-      {
-        await Task.Delay(20);
-      }
+		  private async Task _methodThatWillDeadlock()
+		  {
+			await Task.Delay(20);
+		  }
 	  }
 	  ```
   2. You can use the unit testing framework of your choice. In this example NUNIT is used:
@@ -204,11 +204,11 @@ Available on NuGet: https://www.nuget.org/packages/ConcurrencyChecker
 	  public class AsyncDeadlockOnlyTests 
 	  {
 		  [Test]
-      public void Run_Given_ClassWithAsyncDeadlockIssue_Should_Deadlock()
-      {
-        var instance = new ClassWithAsyncDeadlockIssue();
-        Assert.Throws<ConcurrencyException>(() => ConcurrencyChecker.AssertAsyncDeadlocksOnly(() => instance.Foo()));
-      }
+		  public void Run_Given_ClassWithAsyncDeadlockIssue_Should_Deadlock()
+		  {
+			var instance = new ClassWithAsyncDeadlockIssue();
+			Assert.Throws<ConcurrencyException>(() => ConcurrencyChecker.AssertAsyncDeadlocksOnly(() => instance.Foo()));
+		  }
 	  }
 	  ```
 	
@@ -226,10 +226,10 @@ Available on NuGet: https://www.nuget.org/packages/ConcurrencyChecker
 		    _methodThatWillDeadlock().Wait();
 		  }
 
-      private async Task _methodThatWillDeadlock()
-      {
-        await Task.Delay(20).ConfigureAwait(false);
-      }
+		  private async Task _methodThatWillDeadlock()
+		  {
+			await Task.Delay(20).ConfigureAwait(false);
+		  }
 	  }
 	  ```
     
