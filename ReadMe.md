@@ -6,6 +6,8 @@ The ConcurrencyChecker is an easy to use library which can be used to firstly id
 
 For some people the 'How to' section will be a good place to start, but for most a code sample is worth a thousand words. Please find such a sample with explanation in the 'Tutorial' section.
 
+Available on NuGet: https://www.nuget.org/packages/ConcurrencyChecker
+
 ## Features
   The ConcurrencyChecker will do the following checks:
   - async/await deadlocks
