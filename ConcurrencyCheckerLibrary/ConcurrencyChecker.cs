@@ -202,7 +202,7 @@ namespace ConcurrencyCheckerLibrary
     /// Get report after the ConcurrencyChecker.Run finished
     /// </summary>
     /// <returns>Report if failed or null if successful</returns>
-    public string GetDeadlockReport()
+    public string? GetDeadlockReport()
     {
       var report = new StringBuilder();
       if (_members != null)

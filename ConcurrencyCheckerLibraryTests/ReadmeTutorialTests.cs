@@ -1,7 +1,5 @@
 ﻿using ConcurrencyCheckerLibrary;
 using ConcurrencyCheckerLibrary.Exceptions;
-using NUnit.Framework;
-using System.Threading.Tasks;
 
 namespace ConcurrencyCheckerLibraryTests
 {
