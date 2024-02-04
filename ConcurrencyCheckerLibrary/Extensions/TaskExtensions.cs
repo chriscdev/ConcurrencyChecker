@@ -1,8 +1,4 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace ConcurrencyCheckerLibrary.Extensions
+﻿namespace ConcurrencyCheckerLibrary.Extensions
 {
   internal static class TaskExtensions
   {

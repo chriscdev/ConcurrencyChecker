@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Reflection;
 using ConcurrencyCheckerLibrary.Extensions;
 using ConcurrencyCheckerLibrary.Exceptions;
@@ -202,7 +197,7 @@ namespace ConcurrencyCheckerLibrary
     /// Get report after the ConcurrencyChecker.Run finished
     /// </summary>
     /// <returns>Report if failed or null if successful</returns>
-    public string GetDeadlockReport()
+    public string? GetDeadlockReport()
     {
       var report = new StringBuilder();
       if (_members != null)

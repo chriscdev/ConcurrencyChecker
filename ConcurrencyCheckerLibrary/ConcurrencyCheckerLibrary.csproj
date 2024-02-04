@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Description>The ConcurrencyChecker is an easy to use library that is used to find possible concurrency issues and async deadlocks in your code. Add this library to your unit and/or integration testing arsenal.</Description>
+    <Copyright>Copyright chriscdev 2017</Copyright>
+    <Title>ConcurrencyChecker</Title>
+    <PackageProjectUrl>https://github.com/chriscdev/ConcurrencyChecker</PackageProjectUrl>
+    <PackageLicenseFile>License.md</PackageLicenseFile>
+    <PackageReleaseNotes>Upgraded to .NET 8</PackageReleaseNotes>
+    <AssemblyVersion>1.0.2.0</AssemblyVersion>
+    <PackageTags>Concurrency Check</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\License.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Nito.AsyncEx.Context" Version="5.1.2" />
+    <PackageReference Include="Nito.AsyncEx.Tasks" Version="5.1.2" />
+  </ItemGroup>
+
+</Project>

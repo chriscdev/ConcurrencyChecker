@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ConcurrencyCheckerLibrary.Exceptions
+﻿namespace ConcurrencyCheckerLibrary.Exceptions
 {
   /// <summary>
   /// Exception thrown by the ConcurrencyChecker

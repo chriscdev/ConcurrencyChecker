@@ -1,23 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using ConcurrencyCheckerLibrary;
+﻿using ConcurrencyCheckerLibrary;
 using ConcurrencyCheckerLibraryTests.Helpers;
-using NSubstitute;
-using NUnit.Framework;
+using Moq;
 
 namespace ConcurrencyCheckerLibraryTests
 {
   [TestFixture]
-  public class ConcurrencyCheckerNSubstituteTests
+  public class ConcurrencyCheckerMoqTests
   {
     [Test]
-    public void Run_Given_ClassUsingNSubstitute_Should_ReturnReportWithIssues()
+    public void Run_Given_ClassUsingMoq_Should_ReturnReportWithIssues()
     {
-      var instance = Substitute.For<ClassWithPropertiesConcurrencyIssue>();
-      var finder = new ConcurrencyChecker(instance);
+      var instance = new Mock<ClassWithPropertiesConcurrencyIssue>();
+      var finder = new ConcurrencyChecker(instance.Object);
 
-      var report = finder.Run(10, () => instance.ChangeAddress("Ring Road", "Johannesburg"),
-        () => instance.ChangeAddress("Justice Street", "Polokwane"));
+      var report = finder.Run(10, () => instance.Object.ChangeAddress("Ring Road", "Johannesburg"),
+        () => instance.Object.ChangeAddress("Justice Street", "Polokwane"));
 
       Console.WriteLine(report);
 
@@ -37,23 +34,23 @@ namespace ConcurrencyCheckerLibraryTests
     }
 
     [Test]
-    public void Run_Given_ClassWithMultipleConcurrencyIssuesAndUsingNsubstitute_Should_ReturnReportWithIssues()
+    public void Run_Given_ClassWithMultipleConcurrencyIssuesAndUsingMoq_Should_ReturnReportWithIssues()
     {
-      var instance = Substitute.For<ClassWithMultipleConcurrencyIssues>();
-      var finder = new ConcurrencyChecker(instance);
+      var instance = new Mock<ClassWithMultipleConcurrencyIssues>();
+      var finder = new ConcurrencyChecker(instance.Object);
 
       var report = finder.Run(5,
         () =>
         {
-          instance.ChangeNameAndSurnameTo("Jane", "");
-          instance.ChangeDob(new DateTime(1986, 2, 3));
-          instance.Age = 33;
+          instance.Object.ChangeNameAndSurnameTo("Jane", "");
+          instance.Object.ChangeDob(new DateTime(1986, 2, 3));
+          instance.Object.Age = 33;
         },
         () =>
         {
-          instance.ChangeNameAndSurnameTo("Some", "One");
-          instance.ChangeDob(new DateTime(1987, 2, 3));
-          instance.Age = 35;
+          instance.Object.ChangeNameAndSurnameTo("Some", "One");
+          instance.Object.ChangeDob(new DateTime(1987, 2, 3));
+          instance.Object.Age = 35;
         });
 
       Console.WriteLine(report);
@@ -85,11 +82,12 @@ namespace ConcurrencyCheckerLibraryTests
     }
 
     [Test]
-    public void Run_Given_ClassWithChildClassesAndConcurrencyIssuesUsingNsubstitute_With_ChangeMultiplePropertyOnChildArray_Should_ReturnReportWithIssue()
+    public void Run_Given_ClassWithChildClassesAndConcurrencyIssuesUsingMoq_With_ChangeMultiplePropertyOnChildArray_Should_ReturnReportWithIssue()
     {
-      var childClass = Substitute.For<ChildClass>(0, "zero", new { First = 0 });
+      var childClass = new Mock<ChildClass>(MockBehavior.Default, 0, "zero", new { First = 0 });
+
       var instance =
-        new ClassWithChildClassesAndConcurrencyIssues(childClass, null)
+        new ClassWithChildClassesAndConcurrencyIssues(childClass.Object, null)
         {
           ChildEnumerableProp = new List<ChildClass>
           {

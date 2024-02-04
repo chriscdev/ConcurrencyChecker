@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections;
 using System.Reflection;
 using ConcurrencyCheckerLibrary.Extensions;
 
@@ -13,8 +10,8 @@ namespace ConcurrencyCheckerLibrary.Models
     {
       Instance = instance;
       MemberInfo = memberInfo;
-      ReferenceValues = new List<TM>();
-      Values = new List<TM>();
+      ReferenceValues = [];
+      Values = [];
       Index = index;
     }
 
@@ -22,8 +19,8 @@ namespace ConcurrencyCheckerLibrary.Models
     {
       Instance = instance;
       MemberInfo = memberInfo;
-      ReferenceValues = new List<TM> { initialValue };
-      Values = new List<TM> { initialValue };
+      ReferenceValues = [initialValue];
+      Values = [initialValue];
       Index = index;
     }
 
@@ -47,7 +44,7 @@ namespace ConcurrencyCheckerLibrary.Models
 
       var propInfo = MemberInfo as PropertyInfo;
       if (propInfo != null)
-        return (TM) propInfo.GetValue(Instance, null);
+        return (TM)propInfo.GetValue(Instance, null);
 
       return (TM) Instance;
     }

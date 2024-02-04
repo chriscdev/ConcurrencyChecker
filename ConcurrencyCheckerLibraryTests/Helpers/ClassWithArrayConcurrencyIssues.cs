@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace ConcurrencyCheckerLibraryTests.Helpers
+﻿namespace ConcurrencyCheckerLibraryTests.Helpers
 {
   public class ClassWithArrayConcurrencyIssues
   {
