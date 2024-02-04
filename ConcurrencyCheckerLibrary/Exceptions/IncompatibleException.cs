@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ConcurrencyCheckerLibrary.Exceptions
+﻿namespace ConcurrencyCheckerLibrary.Exceptions
 {
   /// <summary>
   /// Incompatible type exception

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using ConcurrencyCheckerLibrary;
+﻿using ConcurrencyCheckerLibrary;
 using ConcurrencyCheckerLibraryTests.Helpers;
 using NSubstitute;
-using NUnit.Framework;
 
 namespace ConcurrencyCheckerLibraryTests
 {

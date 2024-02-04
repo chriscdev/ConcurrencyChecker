@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-
-namespace ConcurrencyCheckerLibrary.Helpers
+﻿namespace ConcurrencyCheckerLibrary.Helpers
 {
   /// <summary>
   /// Namespace helper
@@ -13,7 +10,7 @@ namespace ConcurrencyCheckerLibrary.Helpers
     /// </summary>
     /// <param name="type">Type</param>
     /// <returns>Root namespace </returns>
-    public static string GetRootNamespace(Type type)
+    public static string? GetRootNamespace(Type type)
     {
       return type.Namespace?.Split('.').First();
     }

@@ -1,8 +1,6 @@
-﻿using System;
-using ConcurrencyCheckerLibrary;
+﻿using ConcurrencyCheckerLibrary;
 using ConcurrencyCheckerLibrary.Exceptions;
 using ConcurrencyCheckerLibraryTests.Helpers;
-using NUnit.Framework;
 
 namespace ConcurrencyCheckerLibraryTests
 {

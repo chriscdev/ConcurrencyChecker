@@ -76,10 +76,5 @@ namespace ConcurrencyCheckerLibrary.Extensions
 
       return proxyNameSpaces.Any(p => p == objType.Namespace) ? objType.BaseType : objType;
     }
-
-    //public static bool IsSystemType(this object obj)
-    //{
-    //  return obj.GetType().IsPrimitive || obj is string || obj is DateTime;
-    //}
   }
 }
